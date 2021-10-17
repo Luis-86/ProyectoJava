@@ -1,7 +1,7 @@
 /*
  
  */
-package Colecciones;
+package luisproject;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class MiLista {
         //llenamos datos de persona2
         per2.setApellido("Lima");
         per2.setNombre("Ana");
-        per2.setCedula("19123123");
+        per2.setCedula("1950042778");
 
         //Agregar Per1 y Per2 a la lista de personas
         this.personas.add(per1);
@@ -37,6 +37,7 @@ public class MiLista {
     }
 
     public void presentarMenu() {
+
         this.LlenarListaInicio();
 
         boolean entrada = true;
@@ -70,42 +71,64 @@ public class MiLista {
 
                 case 2:
                     for (Persona persona : this.personas) {
-                        System.out.println("Nombre: " + persona.getNombre() + " Apellido: " + persona.getApellido() + " Cedula: " + persona.getCedula());
+                        System.out.println(this.personas.indexOf(persona) + " - Nombre: " + persona.getNombre() + " - Apellido: " + persona.getApellido() + " - Cedula: " + persona.getCedula());
                     }
                     break;
-
                 case 3:
-                   
-                    Scanner eliminar = new Scanner(System.in);
                     System.out.println("Indique la posicion de la persona que desea eliminar");
-                    int personas = eliminar.nextInt();
-
-                    //personas=this.personas.indexOf(personas);
-                     this.personas.remove(personas);
-                        System.out.println("dato eliminado");
-                    
-                   /* if (personas != -1) {
-                       
-
-                    } else {
-                        System.out.println("dato no existe");
-                    }*/
-
+                    int numberPerson = lector.nextInt();
+                    boolean deleteOne = false;
+                    for (Persona persona : this.personas) {
+                        if (this.personas.indexOf(persona) == numberPerson) {
+                            this.personas.remove(persona);
+                            System.out.println("PERSONA ELIMINADA CON EXITO!!!");
+                            deleteOne = true;
+                            break;
+                        }
+                    }
+                    if (deleteOne == false) {
+                        System.out.println("USUARIO NO REGISTRADO EN EL SISTEMA!");
+                    }
+                    break;
                 case 4:
-                    Scanner buscar = new Scanner(System.in);
-                    System.out.println("Indique la posicion de la persona que desea eliminar");
-                    int cedula = buscar.nextInt();
-
-                    personas=this.personas.indexOf(cedula);
-                     
-                        System.out.println("dato eliminado");
-                    
-                   /if (cedula == cedula) {
-                       
-
+                    System.out.println("Indique la cedula de la persona a buscar");
+                    String cedula = lector.next();
+                    boolean onePerson = false;
+                    if (cedula.length() == 10) {
+                        for (Persona persona : this.personas) {
+                            if (cedula.equals(persona.getCedula())) {
+                                onePerson = true;
+                                System.out.println("PERSONA ENCONTRADA CON EXITO!");
+                                System.out.println(this.personas.indexOf(persona) + " - Nombre: " + persona.getNombre() + " - Apellido: " + persona.getApellido() + " - Cedula: " + persona.getCedula());
+                            }
+                        }
+                        if (onePerson == false) {
+                            System.out.println("NUMERO DE CEDULA NO ENCONTRADO!");
+                        }
                     } else {
-                        System.out.println("dato no existe");
-                    }*/
+                        boolean validDNI = false;
+                        do {
+                            System.out.println("CEDULA INCORRECTA!!!");
+                            System.out.println("Indique la cedula de la persona a buscar");
+                            cedula = lector.next();
+                            if (cedula.length() == 10) {
+                                for (Persona persona : this.personas) {
+                                    if (cedula.equals(persona.getCedula())) {
+                                        onePerson = true;
+                                        System.out.println("PERSONA ENCONTRADA CON EXITO!");
+                                        System.out.println(this.personas.indexOf(persona) + " - Nombre: " + persona.getNombre() + " - Apellido: " + persona.getApellido() + " - Cedula: " + persona.getCedula());
+                                        validDNI = true;
+                                    }
+                                }
+                                if (onePerson == false) {
+                                    System.out.println("NUMERO DE CEDULA NO ENCONTRADO!");
+                                }
+                            }
+                        } while (validDNI == false);
+                    }
+                    break;
+                default:
+                    System.out.println("OPCION NO VALIDA!!!");
 
             }//Fin del Switch
 
@@ -117,6 +140,25 @@ public class MiLista {
 
             if (opcionRepetir == 2) {
                 entrada = false;
+            } else if (opcionRepetir == 1) {
+                entrada = true;
+            } else {
+                boolean bugNext = false;
+                do {
+                    System.out.println("=====================");
+                    System.out.println("Ingrese una opcion valida!");
+                    System.out.println("Desea continuar con otra operacion ");
+                    System.out.println("(1) => SI");
+                    System.out.println("(2) => NO");
+                    opcionRepetir = this.lector.nextInt();
+                    if (opcionRepetir == 2) {
+                        entrada = false;
+                        System.exit(0);
+                    } else if (opcionRepetir == 1) {
+                        entrada = true;
+                        bugNext = true;
+                    }
+                } while (bugNext == false);
             }
 
         }
